@@ -6,7 +6,7 @@ import com.ems.dto.Employee;
 import com.ems.exception.EmployeeNotFoundException;
 
 public interface EmployeeService {
-	
+
 	public List<Employee> showAllEmployees();
 	
 	public abstract void addEmployee(Employee e);
@@ -14,5 +14,4 @@ public interface EmployeeService {
 	public abstract void updateEmployee(Employee e);
 	public abstract Employee findEmployee(Employee e) throws EmployeeNotFoundException;
 	
-
 }

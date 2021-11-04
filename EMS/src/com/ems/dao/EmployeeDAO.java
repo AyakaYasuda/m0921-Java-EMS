@@ -19,5 +19,5 @@ public interface EmployeeDAO {
 	public abstract void updateEmployee(Employee e);
 	public abstract Employee findEmployee(Employee e) throws EmployeeNotFoundException;
 	
-	
 }
+

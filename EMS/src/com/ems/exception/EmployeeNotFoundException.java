@@ -1,4 +1,4 @@
-package com.ems.exception;
+ package com.ems.exception;
 
 public class EmployeeNotFoundException extends Exception {
 	
@@ -12,6 +12,4 @@ public class EmployeeNotFoundException extends Exception {
 	public String toString() {
 		return "Employee Not Found Exception";
 	}
-	
-
 }

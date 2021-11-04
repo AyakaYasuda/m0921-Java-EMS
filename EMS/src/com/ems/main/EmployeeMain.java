@@ -13,22 +13,23 @@ public class EmployeeMain {
 		
 		EmployeeService eService = new EmployeeServiceImpl();
 		
-		// add employees
-		eService.addEmployee(new Employee(1111, "Micheal", "Sales", 28));
+		//adding employees
+		eService.addEmployee(new Employee(1111, "Michael", "Sales", 28));
 		eService.addEmployee(new Employee(2222, "Samuel", "Technology", 25));
 		eService.addEmployee(new Employee(3333, "John", "Operations", 30));
 		
-		// show all employees
+		//show all employees
 		List<Employee> employeeList = eService.showAllEmployees();
+		printAllEmployees(employeeList);
 		
-		for(Employee e: employeeList) {
-			System.out.println("ID: " + e.getId() + " | Name: " + e.getName() + " | Department: " + e.getDepartment() + " | Days Attended: " + e.getDaysAttended());
-		}
-		
-		// delete an employee
+		//delete an employee
 		eService.deleteEmployee(1111);
 		
-		// find an employee
+		//update an employee
+		eService.updateEmployee(new Employee(3333, "Romeo", "Legal", 15));
+		
+	
+		//find an employee
 		try {
 			Employee emp = eService.findEmployee(new Employee(2222, "Samuel", "Technology", 25));
 			System.out.println("Employee ID: " + emp.getId() + " | Name: " + emp.getName());
@@ -36,8 +37,19 @@ public class EmployeeMain {
 			e1.printStackTrace();
 		}
 		
+		System.out.println("*************************");
+		List<Employee> employeeListUpdated = eService.showAllEmployees();
+		printAllEmployees(employeeListUpdated);
 		
-
 	}
-
+	
+	public static void printAllEmployees(List<Employee> empList){
+		
+		for(Employee e: empList) {
+			System.out.println("ID: " + e.getId() + 
+					" | Name: " + e.getName() + 
+					" | Department: " + e.getDepartment() + 
+					" | Days Attended: " + e.getDaysAttended());
+		}
+	}
 }

@@ -17,12 +17,12 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	//performing database operations
-	private static final String INSERT_COMMAND = "INSERT INTO employees_tbl VALUES (?,?,?,?)";
+	private static final String INSERT_COMMAND = "INSERT INTO employees_tbl VALUES (?,?,?,?)"; // placeholder ---> ?
+	private static final String UPDATE_COMMAND = "UPDATE employees_tbl SET name = ?, department = ?, daysAttended = ? WHERE id = ?";
 	private static final String DELETE_COMMAND = "DELETE FROM employees_tbl WHERE id=?";
-	private static final String UPDATE_COMMAND = "UPDATE employees_tbl SET name=? department=? daysAttended=? WHERE id=?";
-	private static final String FIND_COMMAND = "SELECT * FROM employees_database WHERE id=?";
-	private static final String SELECT_ALL = "SELECT * FROM employees_database";
-
+	private static final String FIND_COMMAND = "SELECT * FROM employees_tbl WHERE id=?";
+	private static final String SELECT_ALL = "SELECT * FROM employees_tbl";
+	
 	
 	public EmployeeDAOMySQLImpl() {
 		try {
@@ -32,11 +32,10 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@Override
 	public void addEmployee(Employee e) {
-		int  i = 0;
+		int i = 0;
 		
 		try {
 			statement = conn.prepareStatement(INSERT_COMMAND);
@@ -60,7 +59,7 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			}
 		}
 		
-		if (i > 1) {
+		if(i > 1) {
 			System.out.println("Record Added...");
 		}
 		
@@ -75,7 +74,7 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			statement.setInt(1, id);
 			i = statement.executeUpdate();
 		} catch (SQLException e2) {
-			System.out.println("Deleting operation failed... Unable to execute DELETE");
+			System.out.println("Delete operation failed... Unable to execute DELETE");
 			e2.printStackTrace();
 		} finally {
 			try {
@@ -85,32 +84,26 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			}
 		}
 		
-		if (i > 1) {
+		if(i > 1) {
 			System.out.println("Record Deleted...");
 		}
-		
-		
 	}
 
 	@Override
 	public void updateEmployee(Employee e) {
-		int  i = 0;
+		int i = 0;
 		
 		try {
 			statement = conn.prepareStatement(UPDATE_COMMAND);
-			statement.setInt(1, e.getId());
-			statement.setString(2, e.getName());
-			statement.setString(3, e.getDepartment());
-			statement.setInt(4, e.getDaysAttended());
-			
+			statement.setString(1, e.getName());
+			statement.setString(2, e.getDepartment());
+			statement.setInt(3, e.getDaysAttended());
+			statement.setInt(4, e.getId());
 			i = statement.executeUpdate();
-			
-			
 		} catch (SQLException e1) {
-			System.out.println("Updating record failed... Unable to execute UPDATE");
+			System.out.println("Update operation failed... Unable to execute UPDATE");
 			e1.printStackTrace();
 		} finally {
-			
 			try {
 				statement.close();
 			} catch (SQLException e1) {
@@ -118,10 +111,9 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			}
 		}
 		
-		if (i > 1) {
+		if(i > 1) {
 			System.out.println("Record Updated...");
 		}
-		
 		
 	}
 
@@ -145,8 +137,6 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			findTemp.setDepartment(resultSet.getString("department"));
 			findTemp.setDaysAttended(resultSet.getInt("daysAttended"));
 			
-			
-			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		} finally {
@@ -158,10 +148,8 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 			}
 		}
 		
-		
 		return findTemp;
 	}
-
 
 	@Override
 	public List<Employee> showAllEmployees() {
@@ -182,11 +170,9 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 				
 				empList.add(selectAllTemp);
 			}
-			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
 			try {
 				statement.close();
 				resultSet.close();
@@ -194,7 +180,6 @@ public class EmployeeDAOMySQLImpl implements EmployeeDAO {
 				e.printStackTrace();
 			}
 		}
-		
 		
 		return empList;
 	}

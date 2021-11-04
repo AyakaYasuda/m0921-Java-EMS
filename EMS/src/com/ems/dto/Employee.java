@@ -1,7 +1,7 @@
 package com.ems.dto;
 
 public class Employee {
-	
+
 	private int id;
 	private String name;
 	private String department;
@@ -51,8 +51,4 @@ public class Employee {
 		this.daysAttended = daysAttended;
 	}
 	
-	
-	
-	
-
 }
